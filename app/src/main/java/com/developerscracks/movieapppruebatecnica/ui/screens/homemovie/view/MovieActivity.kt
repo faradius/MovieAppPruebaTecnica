@@ -1,4 +1,4 @@
-package com.developerscracks.movieapppruebatecnica.ui.homemovie
+package com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

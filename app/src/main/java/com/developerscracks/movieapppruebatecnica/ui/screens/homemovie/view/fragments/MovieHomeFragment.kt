@@ -1,4 +1,4 @@
-package com.developerscracks.movieapppruebatecnica.ui.homemovie
+package com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

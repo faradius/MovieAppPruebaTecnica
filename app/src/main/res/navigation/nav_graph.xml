@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/movieHomeFragment"
-        android:name="com.developerscracks.movieapppruebatecnica.ui.homemovie.MovieHomeFragment"
+        android:name="com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fragments.MovieHomeFragment"
         android:label="fragment_movie_home"
         tools:layout="@layout/fragment_movie_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.developerscracks.movieapppruebatecnica.ui.detailmovie.MovieDetailFragment"
+        android:name="com.developerscracks.movieapppruebatecnica.ui.screens.detailmovie.view.MovieDetailFragment"
         android:label="MovieDetailFragment"
         tools:layout="@layout/fragment_movie_detail" />
 </navigation>

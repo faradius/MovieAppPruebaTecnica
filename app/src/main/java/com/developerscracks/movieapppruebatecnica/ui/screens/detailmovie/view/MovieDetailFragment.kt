@@ -1,4 +1,4 @@
-package com.developerscracks.movieapppruebatecnica.ui.detailmovie
+package com.developerscracks.movieapppruebatecnica.ui.screens.detailmovie.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
