@@ -1,11 +1,14 @@
 package com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
@@ -33,6 +36,31 @@ class MovieHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar!!.title = ""
+
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowCustomEnabled(true)
+        val inflater: LayoutInflater = requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = inflater.inflate(R.layout.appbar_logo, null)
+        (activity as AppCompatActivity).supportActionBar?.customView = view
+
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.search_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId){
+                    R.id.search ->{
+                        Toast.makeText(requireContext(), "Search", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                }
+                return false
+            }
+
+        }, viewLifecycleOwner)
+
         viewModel.getMoviesTopRated()
         showInfoRecyclerView()
 

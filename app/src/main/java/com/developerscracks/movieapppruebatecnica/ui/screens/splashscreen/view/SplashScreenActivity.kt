@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.MovieActivity
@@ -14,6 +15,12 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        //Ocultar la barra de acciones
+        supportActionBar!!.hide()
+
+        //Ocultar la barra de estado
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         changeScreen()
     }
 

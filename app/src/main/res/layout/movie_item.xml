@@ -38,7 +38,7 @@
             android:paddingStart="5dp"
             android:paddingBottom="10dp"
             android:textAlignment="viewStart"
-            android:textColor="#FFC107"
+            android:textColor="@color/red"
             android:textSize="12sp"
             android:textStyle="bold"
             tools:text="6.33/10" />
