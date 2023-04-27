@@ -1,7 +1,8 @@
 package com.developerscracks.movieapppruebatecnica.data.mapper.dto
 
-import com.developerscracks.movieapppruebatecnica.data.network.model.MovieDTO
+import com.developerscracks.movieapppruebatecnica.data.network.model.movie.MovieDTO
 import com.developerscracks.movieapppruebatecnica.domain.entities.Movie
+import com.example.movieapp.data.model.moviedetail.MovieDetailDTO
 
 fun MovieDTO.toDomain(): Movie{
     return Movie(

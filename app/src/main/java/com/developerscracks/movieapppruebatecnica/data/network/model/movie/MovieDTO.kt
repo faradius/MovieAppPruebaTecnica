@@ -1,4 +1,4 @@
-package com.developerscracks.movieapppruebatecnica.data.network.model
+package com.developerscracks.movieapppruebatecnica.data.network.model.movie
 
 data class MovieDTO(
     val adult: Boolean,

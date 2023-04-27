@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/movieHomeFragment"
         android:name="com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fragments.MovieHomeFragment"
-        android:label="fragment_movie_home"
+        android:label="Movies"
         tools:layout="@layout/fragment_movie_home" >
         <action
             android:id="@+id/action_movieHomeFragment_to_movieDetailFragment"
@@ -18,6 +18,10 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.developerscracks.movieapppruebatecnica.ui.screens.detailmovie.view.MovieDetailFragment"
-        android:label="MovieDetailFragment"
-        tools:layout="@layout/fragment_movie_detail" />
+        android:label=""
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

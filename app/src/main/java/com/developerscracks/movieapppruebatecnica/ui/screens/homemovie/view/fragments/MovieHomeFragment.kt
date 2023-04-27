@@ -1,16 +1,23 @@
 package com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesTopRatedAdapter
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.viewmodel.HomeViewModel
+import com.developerscracks.movieapppruebatecnica.ui.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +28,12 @@ class MovieHomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val moviesTopRatedAdapter: MoviesTopRatedAdapter = MoviesTopRatedAdapter()
+    private val moviesTopRatedAdapter: MoviesTopRatedAdapter = MoviesTopRatedAdapter(
+        onClick = {selectedMovie ->
+            val action = MovieHomeFragmentDirections.actionMovieHomeFragmentToMovieDetailFragment(selectedMovie)
+            findNavController().navigate(action)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +45,30 @@ class MovieHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.searchView.setOnQueryTextListener(object: OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return if (query != null){
+                    viewModel.getMovieByTitle(query)
+                    binding.searchView.hideKeyboard()
+                    true
+                }else{
+                    viewModel.getMoviesTopRated()
+                    false
+                }
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return if (newText != null){
+                    viewModel.getMovieByTitle(newText)
+                    true
+                }else{
+                    viewModel.getMoviesTopRated()
+                    false
+                }
+            }
+        })
+
         viewModel.getMoviesTopRated()
         showInfoRecyclerView()
 
@@ -44,6 +80,32 @@ class MovieHomeFragment : Fragment() {
         viewModel.movies.observe(viewLifecycleOwner){
             moviesTopRatedAdapter.submitList(it)
         }
+    }
+
+    private fun customActionBar(){
+        (activity as AppCompatActivity).supportActionBar!!.title = ""
+
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayShowCustomEnabled(true)
+        val inflater: LayoutInflater = requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = inflater.inflate(R.layout.appbar_logo, null)
+        (activity as AppCompatActivity).supportActionBar?.customView = view
+
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.search_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when(menuItem.itemId){
+                    R.id.search ->{
+                        Toast.makeText(requireContext(), "Search", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                }
+                return false
+            }
+
+        }, viewLifecycleOwner)
     }
 
     override fun onDestroy() {
