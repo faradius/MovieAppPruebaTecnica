@@ -43,6 +43,20 @@ class MovieHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getMoviesTopRated()
+        showInfoRecyclerView()
+
+
+    }
+
+    private fun showInfoRecyclerView(){
+        binding.rvTopRatedMovies.adapter = moviesTopRatedAdapter
+        viewModel.movies.observe(viewLifecycleOwner){
+            moviesTopRatedAdapter.submitList(it)
+        }
+    }
+
+    private fun customActionBar(){
         (activity as AppCompatActivity).supportActionBar!!.title = ""
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayShowCustomEnabled(true)
@@ -66,18 +80,6 @@ class MovieHomeFragment : Fragment() {
             }
 
         }, viewLifecycleOwner)
-
-        viewModel.getMoviesTopRated()
-        showInfoRecyclerView()
-
-
-    }
-
-    private fun showInfoRecyclerView(){
-        binding.rvTopRatedMovies.adapter = moviesTopRatedAdapter
-        viewModel.movies.observe(viewLifecycleOwner){
-            moviesTopRatedAdapter.submitList(it)
-        }
     }
 
     override fun onDestroy() {
