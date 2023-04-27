@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesTopRatedAdapter
@@ -24,7 +25,12 @@ class MovieHomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val moviesTopRatedAdapter: MoviesTopRatedAdapter = MoviesTopRatedAdapter()
+    private val moviesTopRatedAdapter: MoviesTopRatedAdapter = MoviesTopRatedAdapter(
+        onClick = {selectedMovie ->
+            val action = MovieHomeFragmentDirections.actionMovieHomeFragmentToMovieDetailFragment(selectedMovie)
+            findNavController().navigate(action)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -19,5 +19,9 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.developerscracks.movieapppruebatecnica.ui.screens.detailmovie.view.MovieDetailFragment"
         android:label="MovieDetailFragment"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -7,4 +7,6 @@ data class Movie(
     val title: String,
     val overview: String,
     val vote_average: Double
-)
+){
+    val movieVote = String.format("%.1f", vote_average)
+}

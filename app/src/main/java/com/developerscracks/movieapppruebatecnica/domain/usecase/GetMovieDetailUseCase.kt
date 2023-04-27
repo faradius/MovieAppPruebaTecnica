@@ -7,11 +7,9 @@ import com.developerscracks.movieapppruebatecnica.domain.utils.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class GetMovieTopRated @Inject constructor(
+class GetMovieDetailUseCase@Inject constructor(
     private val movieRepository: MovieRepository,
     @IoDispatcher dispatcher: CoroutineDispatcher
-): UseCase<Unit, List<Movie>>(dispatcher) {
-    override suspend fun execute(params: Unit): List<Movie> {
-        return movieRepository.getTopRatedMovies()
-    }
+): UseCase<Int, Movie>(dispatcher){
+    override suspend fun execute(params: Int): Movie = movieRepository.getMovieDetail(params)
 }

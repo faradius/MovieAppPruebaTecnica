@@ -20,4 +20,14 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getMovieDetail(id:Int): Movie {
+        return when(val response = networkDatasource.getMovieDetail(id.toString())){
+            is ApiResponse.ApiEmptyResponse -> throw NotImplementedError("Implement a strategy when the response is empty")
+            is ApiResponse.ApiError -> throw NotImplementedError("Implemented estrategy when the api rest throw a error")
+            is ApiResponse.ApiSuccessResponse -> {
+                response.body.toDomain()
+            }
+        }
+    }
 }

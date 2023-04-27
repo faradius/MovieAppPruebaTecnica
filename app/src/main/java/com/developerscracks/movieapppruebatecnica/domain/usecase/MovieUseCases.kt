@@ -1,5 +1,6 @@
 package com.developerscracks.movieapppruebatecnica.domain.usecase
 
 data class MovieUseCases (
-    val getMovieTopRated: GetMovieTopRated
+    val getMovieTopRatedUseCase: GetMovieTopRatedUseCase,
+    val getMovieDetailUseCase: GetMovieDetailUseCase
 )

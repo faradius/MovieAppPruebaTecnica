@@ -10,7 +10,7 @@ import com.developerscracks.movieapppruebatecnica.databinding.MovieItemBinding
 import com.developerscracks.movieapppruebatecnica.ui.model.MovieUI
 
 class MoviesTopRatedAdapter(
-//    private val onClick: (Int) -> Unit
+    private val onClick: (Int) -> Unit
 ) : ListAdapter<MovieUI, MoviesTopRatedAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -35,7 +35,7 @@ class MoviesTopRatedAdapter(
         init {
             itemView.setOnClickListener {
                 currentMovie?.let {
-//                    onClick(it.id)
+                    onClick(it.id)
                 }
             }
         }
