@@ -16,6 +16,7 @@ class UseCaseModule {
         getMovieTopRatedUseCase = GetMovieTopRatedUseCase(repository, dispatcher),
         getMovieDetailUseCase = GetMovieDetailUseCase(repository, dispatcher),
         getMovieByTitleUseCase = GetMovieByTitleUseCase(repository, dispatcher),
-        getMovieNowPlayingUseCase = GetMovieNowPlayingUseCase(repository, dispatcher)
+        getMovieNowPlayingUseCase = GetMovieNowPlayingUseCase(repository, dispatcher),
+        getMovieByTitleNowPlayingUseCase = GetMovieByTitleNowPlayingUseCase(repository, dispatcher)
     )
 }

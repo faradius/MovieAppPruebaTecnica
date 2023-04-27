@@ -12,6 +12,7 @@ class MovieLocalDataSourceImpl @Inject constructor(
 
     override suspend fun getMovieById(id: Int): MovieEntity = movieDao.getMovieById(id)
     override suspend fun getMoviesByTitle(query: String): List<MovieEntity> = movieDao.getMovieByTitle(query)
+    override suspend fun getMoviesByTitleNowPlaying(query: String): List<MovieEntity> = movieDao.getMovieByTitleNowPlaying(query)
 
     override suspend fun insertAllMovies(movies: List<MovieEntity>) = movieDao.insertMovies(movies)
 

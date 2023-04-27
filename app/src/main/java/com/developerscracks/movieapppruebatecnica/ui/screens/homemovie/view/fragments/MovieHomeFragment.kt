@@ -55,6 +55,7 @@ class MovieHomeFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return if (query != null){
                     viewModel.getMovieByTitle(query)
+                    viewModel.getMovieByTitleNowPlaying(query)
                     binding.searchView.hideKeyboard()
                     true
                 }else{
@@ -65,6 +66,7 @@ class MovieHomeFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return if (newText != null){
                     viewModel.getMovieByTitle(newText)
+                    viewModel.getMovieByTitleNowPlaying(newText)
                     true
                 }else{
                     false

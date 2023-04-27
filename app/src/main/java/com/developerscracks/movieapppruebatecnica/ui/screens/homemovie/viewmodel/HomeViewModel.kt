@@ -60,6 +60,19 @@ class HomeViewModel @Inject constructor(private val movieUseCases: MovieUseCases
                 }
                 is MovieResult.Success ->{
                     _movies.value = result.data.map { it.toMovieUI() }
+                }
+            }
+        }
+    }
+
+    fun getMovieByTitleNowPlaying(query: String){
+        viewModelScope.launch {
+            val result = movieUseCases.getMovieByTitleNowPlayingUseCase(query)
+            when (result){
+                is MovieResult.Error -> {
+                    _mensaje.value = result.error.message ?: "Error desconocido"
+                }
+                is MovieResult.Success ->{
                     _moviesNowPlaying.value = result.data.map { it.toMovieUI() }
                 }
             }
