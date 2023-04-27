@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.developerscracks.movieapppruebatecnica.databinding.MovieItemBinding
 import com.developerscracks.movieapppruebatecnica.ui.model.MovieUI
 
-class MoviesTopRatedAdapter(
+class MoviesAdapter(
     private val onClick: (Int) -> Unit
-) : ListAdapter<MovieUI, MoviesTopRatedAdapter.MovieViewHolder>(MovieDiffUtil) {
+) : ListAdapter<MovieUI, MoviesAdapter.MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))

@@ -17,12 +17,11 @@ class HomeViewModel @Inject constructor(private val movieUseCases: MovieUseCases
     private val _movies: MutableLiveData<List<MovieUI>> = MutableLiveData()
     val movies: LiveData<List<MovieUI>> = _movies
 
+    private val _moviesNowPlaying: MutableLiveData<List<MovieUI>> = MutableLiveData()
+    val moviesNowPlaying: LiveData<List<MovieUI>> = _moviesNowPlaying
+
     private var _mensaje = MutableLiveData<String>()
     val mensaje:LiveData<String> = _mensaje
-
-    init {
-        getMoviesTopRated()
-    }
 
     fun getMoviesTopRated(){
         viewModelScope.launch {
@@ -38,6 +37,20 @@ class HomeViewModel @Inject constructor(private val movieUseCases: MovieUseCases
         }
     }
 
+    fun getMoviesNowPlaying(){
+        viewModelScope.launch {
+            val result = movieUseCases.getMovieNowPlayingUseCase(Unit)
+            when (result){
+                is MovieResult.Error -> {
+                    _mensaje.value = result.error.message ?: "Error desconocido"
+                }
+                is MovieResult.Success ->{
+                    _moviesNowPlaying.value = result.data.map { it.toMovieUI() }
+                }
+            }
+        }
+    }
+
     fun getMovieByTitle(query: String){
         viewModelScope.launch {
             val result = movieUseCases.getMovieByTitleUseCase(query)
@@ -47,6 +60,7 @@ class HomeViewModel @Inject constructor(private val movieUseCases: MovieUseCases
                 }
                 is MovieResult.Success ->{
                     _movies.value = result.data.map { it.toMovieUI() }
+                    _moviesNowPlaying.value = result.data.map { it.toMovieUI() }
                 }
             }
         }

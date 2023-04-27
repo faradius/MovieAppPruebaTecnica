@@ -5,7 +5,7 @@ import com.developerscracks.movieapppruebatecnica.data.local.entities.MovieEntit
 interface MovieLocalDataSource {
 
     suspend fun getMoviesTopRated(category:String): List<MovieEntity>
-//    suspend fun getMoviesNowPlaying(category:String): List<MovieEntity>
+    suspend fun getMoviesNowPlaying(category:String): List<MovieEntity>
 
     suspend fun getMovieById(id:Int): MovieEntity
 

@@ -20,9 +20,10 @@ class MovieRepositoryImpl @Inject constructor(
         return localDatasource.getMoviesTopRated("top_rated").map { it.toDomain() }
     }
 
-//    override suspend fun getPlayingMovies(): List<Movie> {
-//
-//    }
+    override suspend fun getPlayingMovies(): List<Movie> {
+        syncPlayingNow()
+        return localDatasource.getMoviesNowPlaying("now_playing").map { it.toDomain() }
+    }
 
     override suspend fun getMovieByTitle(query: String): List<Movie> {
         return localDatasource.getMoviesByTitle(query).map { it.toDomain() }

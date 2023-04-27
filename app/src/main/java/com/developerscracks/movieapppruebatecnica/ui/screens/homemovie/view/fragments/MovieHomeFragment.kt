@@ -2,9 +2,7 @@ package com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.fra
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
-import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesTopRatedAdapter
+import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesAdapter
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.viewmodel.HomeViewModel
 import com.developerscracks.movieapppruebatecnica.ui.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,8 +26,15 @@ class MovieHomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val moviesTopRatedAdapter: MoviesTopRatedAdapter = MoviesTopRatedAdapter(
+    private val moviesTopRatedAdapter: MoviesAdapter = MoviesAdapter(
         onClick = {selectedMovie ->
+            val action = MovieHomeFragmentDirections.actionMovieHomeFragmentToMovieDetailFragment(selectedMovie)
+            findNavController().navigate(action)
+        }
+    )
+
+    private val moviesNowPlayingAdapter: MoviesAdapter = MoviesAdapter(
+        onClick = { selectedMovie ->
             val action = MovieHomeFragmentDirections.actionMovieHomeFragmentToMovieDetailFragment(selectedMovie)
             findNavController().navigate(action)
         }
@@ -53,7 +58,6 @@ class MovieHomeFragment : Fragment() {
                     binding.searchView.hideKeyboard()
                     true
                 }else{
-                    viewModel.getMoviesTopRated()
                     false
                 }
             }
@@ -63,13 +67,13 @@ class MovieHomeFragment : Fragment() {
                     viewModel.getMovieByTitle(newText)
                     true
                 }else{
-                    viewModel.getMoviesTopRated()
                     false
                 }
             }
         })
 
         viewModel.getMoviesTopRated()
+        viewModel.getMoviesNowPlaying()
         showInfoRecyclerView()
 
 
@@ -79,6 +83,11 @@ class MovieHomeFragment : Fragment() {
         binding.rvTopRatedMovies.adapter = moviesTopRatedAdapter
         viewModel.movies.observe(viewLifecycleOwner){
             moviesTopRatedAdapter.submitList(it)
+        }
+
+        binding.rvNowPlayigMovies.adapter = moviesNowPlayingAdapter
+        viewModel.moviesNowPlaying.observe(viewLifecycleOwner){
+            moviesNowPlayingAdapter.submitList(it)
         }
     }
 

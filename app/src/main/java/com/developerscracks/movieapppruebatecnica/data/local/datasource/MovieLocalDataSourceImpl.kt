@@ -8,6 +8,7 @@ class MovieLocalDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao
 ): MovieLocalDataSource{
     override suspend fun getMoviesTopRated(category: String): List<MovieEntity> = movieDao.getMoviesTopRated(category)
+    override suspend fun getMoviesNowPlaying(category: String): List<MovieEntity> =movieDao.getMoviesNowPlaying(category)
 
     override suspend fun getMovieById(id: Int): MovieEntity = movieDao.getMovieById(id)
     override suspend fun getMoviesByTitle(query: String): List<MovieEntity> = movieDao.getMovieByTitle(query)
