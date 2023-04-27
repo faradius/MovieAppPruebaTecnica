@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesTopRatedAdapter
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.viewmodel.HomeViewModel
+import com.developerscracks.movieapppruebatecnica.ui.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +45,29 @@ class MovieHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.searchView.setOnQueryTextListener(object: OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return if (query != null){
+                    viewModel.getMovieByTitle(query)
+                    binding.searchView.hideKeyboard()
+                    true
+                }else{
+                    viewModel.getMoviesTopRated()
+                    false
+                }
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return if (newText != null){
+                    viewModel.getMovieByTitle(newText)
+                    true
+                }else{
+                    viewModel.getMoviesTopRated()
+                    false
+                }
+            }
+        })
 
         viewModel.getMoviesTopRated()
         showInfoRecyclerView()

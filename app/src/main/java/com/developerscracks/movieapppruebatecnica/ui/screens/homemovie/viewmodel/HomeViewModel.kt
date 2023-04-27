@@ -20,9 +20,27 @@ class HomeViewModel @Inject constructor(private val movieUseCases: MovieUseCases
     private var _mensaje = MutableLiveData<String>()
     val mensaje:LiveData<String> = _mensaje
 
+    init {
+        getMoviesTopRated()
+    }
+
     fun getMoviesTopRated(){
         viewModelScope.launch {
             val result = movieUseCases.getMovieTopRatedUseCase(Unit)
+            when (result){
+                is MovieResult.Error -> {
+                    _mensaje.value = result.error.message ?: "Error desconocido"
+                }
+                is MovieResult.Success ->{
+                    _movies.value = result.data.map { it.toMovieUI() }
+                }
+            }
+        }
+    }
+
+    fun getMovieByTitle(query: String){
+        viewModelScope.launch {
+            val result = movieUseCases.getMovieByTitleUseCase(query)
             when (result){
                 is MovieResult.Error -> {
                     _mensaje.value = result.error.message ?: "Error desconocido"

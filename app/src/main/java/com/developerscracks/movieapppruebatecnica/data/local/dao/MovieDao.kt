@@ -11,6 +11,9 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :id")
     suspend fun getMovieById(id:Int): MovieEntity
 
+    @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
+    suspend fun getMovieByTitle(query: String): List<MovieEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<MovieEntity>)
 

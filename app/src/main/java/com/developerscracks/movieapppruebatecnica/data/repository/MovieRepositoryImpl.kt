@@ -19,6 +19,10 @@ class MovieRepositoryImpl @Inject constructor(
         return localDatasource.getAllMovies().map { it.toDomain() }
     }
 
+    override suspend fun getMovieByTitle(query: String): List<Movie> {
+        return localDatasource.getMoviesByTitle(query).map { it.toDomain() }
+    }
+
     override suspend fun getMovieDetail(id:Int): Movie {
         return localDatasource.getMovieById(id).toDomain()
     }
