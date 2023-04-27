@@ -13,6 +13,10 @@ class MovieDataSourceNetworkImpl @Inject constructor(private val api: ApiService
         return api.getTopRatedMovies(API_KEY).handleResponse()
     }
 
+    override suspend fun getNowPlayingMovies(): ApiResponse<MovieResponse> {
+        return api.getNowPlayingMovies(API_KEY).handleResponse()
+    }
+
     override suspend fun getMovieDetail(id: String): ApiResponse<MovieDetailDTO> {
         return api.getMovieDetail(id, API_KEY).handleResponse()
     }

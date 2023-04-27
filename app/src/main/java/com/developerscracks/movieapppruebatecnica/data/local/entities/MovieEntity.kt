@@ -11,5 +11,6 @@ data class MovieEntity(
     @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "overview" ) val overview: String?,
-    @ColumnInfo(name = "vote_average") val voteAverage: Double?
+    @ColumnInfo(name = "vote_average") val voteAverage: Double?,
+    @ColumnInfo(name = "category") val category: String?
 )

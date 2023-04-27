@@ -5,8 +5,11 @@ import com.developerscracks.movieapppruebatecnica.data.local.entities.MovieEntit
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movies")
-    suspend fun getAllMovies(): List<MovieEntity>
+    @Query("SELECT * FROM movies WHERE category = :category")
+    suspend fun getMoviesTopRated(category:String): List<MovieEntity>
+
+    @Query("SELECT * FROM movies WHERE category = :category")
+    suspend fun getMoviesNowPlaying(category:String): List<MovieEntity>
 
     @Query("SELECT * FROM movies WHERE id = :id")
     suspend fun getMovieById(id:Int): MovieEntity

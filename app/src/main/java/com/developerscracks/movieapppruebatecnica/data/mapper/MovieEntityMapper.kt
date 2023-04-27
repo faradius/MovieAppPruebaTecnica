@@ -22,6 +22,7 @@ fun MovieDTO.toEntity(): MovieEntity{
         backdropPath = backdrop_path,
         title = title,
         overview = overview,
-        voteAverage = vote_average
+        voteAverage = vote_average,
+        category = ""
     )
 }

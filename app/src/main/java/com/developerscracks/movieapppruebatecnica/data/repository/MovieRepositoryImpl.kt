@@ -2,6 +2,7 @@ package com.developerscracks.movieapppruebatecnica.data.repository
 
 import android.util.Log
 import com.developerscracks.movieapppruebatecnica.data.local.datasource.MovieLocalDataSource
+import com.developerscracks.movieapppruebatecnica.data.local.entities.MovieEntity
 import com.developerscracks.movieapppruebatecnica.data.mapper.dto.toDomain
 import com.developerscracks.movieapppruebatecnica.data.mapper.toDomain
 import com.developerscracks.movieapppruebatecnica.data.mapper.toEntity
@@ -15,9 +16,13 @@ class MovieRepositoryImpl @Inject constructor(
     private val localDatasource: MovieLocalDataSource
 ) : MovieRepository {
     override suspend fun getTopRatedMovies(): List<Movie> {
-        syncMovies()
-        return localDatasource.getAllMovies().map { it.toDomain() }
+        syncMoviesTopRated()
+        return localDatasource.getMoviesTopRated("top_rated").map { it.toDomain() }
     }
+
+//    override suspend fun getPlayingMovies(): List<Movie> {
+//
+//    }
 
     override suspend fun getMovieByTitle(query: String): List<Movie> {
         return localDatasource.getMoviesByTitle(query).map { it.toDomain() }
@@ -27,15 +32,34 @@ class MovieRepositoryImpl @Inject constructor(
         return localDatasource.getMovieById(id).toDomain()
     }
 
-    private suspend fun syncMovies(){
+    private suspend fun syncMoviesTopRated(){
         try {
             when(val response = networkDatasource.getTopRatedMovies()){
                 is ApiResponse.ApiSuccessResponse ->{
-                    val moviesNetwork = response.body.results.map { it.toEntity() }
+                    val moviesNetwork = response.body.results.map { movie->
+                        movie.toEntity().copy(category = "top_rated")
+                    }
                     localDatasource.insertAllMovies(moviesNetwork)
                 }else ->{
                 Log.i("Network Error", "No se guardaron los datos", )
                 }
+            }
+        }catch (e: Exception){
+            Log.e("Unknown error", "No se guardaron los datos")
+        }
+    }
+
+    private suspend fun syncPlayingNow(){
+        try {
+            when(val response = networkDatasource.getNowPlayingMovies()){
+                is ApiResponse.ApiSuccessResponse ->{
+                    val moviesNetwork = response.body.results.map { movie->
+                        movie.toEntity().copy(category = "now_playing")
+                    }
+                    localDatasource.insertAllMovies(moviesNetwork)
+                }else ->{
+                Log.i("Network Error", "No se guardaron los datos", )
+            }
             }
         }catch (e: Exception){
             Log.e("Unknown error", "No se guardaron los datos")

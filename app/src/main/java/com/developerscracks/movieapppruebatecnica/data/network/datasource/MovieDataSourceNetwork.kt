@@ -7,6 +7,6 @@ import com.example.movieapp.data.model.moviedetail.MovieDetailDTO
 interface MovieDataSourceNetwork {
 
     suspend fun getTopRatedMovies():ApiResponse<MovieResponse>
-
+    suspend fun getNowPlayingMovies():ApiResponse<MovieResponse>
     suspend fun getMovieDetail(id:String): ApiResponse<MovieDetailDTO>
 }
