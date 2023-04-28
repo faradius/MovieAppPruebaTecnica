@@ -14,3 +14,11 @@ fun View.hideKeyboard(){
     imm.hideSoftInputFromWindow(windowToken, 0)
     this.clearFocus()
 }
+
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}

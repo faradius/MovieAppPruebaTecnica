@@ -15,7 +15,9 @@ import com.developerscracks.movieapppruebatecnica.R
 import com.developerscracks.movieapppruebatecnica.databinding.FragmentMovieHomeBinding
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.view.adapters.MoviesAdapter
 import com.developerscracks.movieapppruebatecnica.ui.screens.homemovie.viewmodel.HomeViewModel
+import com.developerscracks.movieapppruebatecnica.ui.utils.hide
 import com.developerscracks.movieapppruebatecnica.ui.utils.hideKeyboard
+import com.developerscracks.movieapppruebatecnica.ui.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,7 +80,25 @@ class MovieHomeFragment : Fragment() {
         viewModel.getMoviesNowPlaying()
         showInfoRecyclerView()
 
+        viewModel.movies.observe(viewLifecycleOwner){
+            if (it.isEmpty()){
+                binding.tvTitleMovieTopRated.hide()
+                binding.rvTopRatedMovies.hide()
+            }else{
+                binding.tvTitleMovieTopRated.show()
+                binding.rvTopRatedMovies.show()
+            }
+        }
 
+        viewModel.moviesNowPlaying.observe(viewLifecycleOwner){
+            if (it.isEmpty()){
+                binding.tvTitleNowPlaying.hide()
+                binding.rvNowPlayigMovies.hide()
+            }else{
+                binding.tvTitleNowPlaying.show()
+                binding.rvNowPlayigMovies.show()
+            }
+        }
     }
 
     private fun showInfoRecyclerView(){
